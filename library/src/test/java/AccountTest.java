@@ -43,5 +43,9 @@ public class AccountTest {
     account.credit(-100.50);
   }
 
-  
+  @Test
+  public void shouldDebitAmountFromAccountBalance() {
+    account.debit(200);
+    assertThat(account.getBalance(),is(800.00));
+  }
 }

@@ -28,4 +28,8 @@ public class Account {
     if(amountTobeCredited<0) throw new InvalidAmount();
     balance+=amountTobeCredited;
   }
+
+  public void debit(double amountTobeDebited) {
+    balance-=amountTobeDebited;
+  }
 }

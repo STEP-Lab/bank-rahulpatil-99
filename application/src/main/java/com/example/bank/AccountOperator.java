@@ -6,5 +6,7 @@ public class AccountOperator{
     System.out.println(account.getBalance());
     account.credit(500.50);
     System.out.println(account.getBalance());
+    account.debit(200.50);
+    System.out.println(account.getBalance());
   }
 }
