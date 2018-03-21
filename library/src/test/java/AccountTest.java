@@ -1,6 +1,6 @@
 import com.example.bank.Account;
 import com.example.bank.InvalidAccountNumber;
-import org.junit.Assert;
+import com.example.bank.InvalidAmount;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,8 +33,15 @@ public class AccountTest {
   }
 
   @Test
-  public void shouldCreditAmountIntoAccountBalance() {
+  public void shouldCreditAmountIntoAccountBalance() throws InvalidAmount {
     account.credit(500.50);
     assertThat(account.getBalance(),is(1500.50));
   }
+
+  @Test(expected = InvalidAmount.class )
+  public void shouldThrowInvalidAmountExceptionForInvalidAmountCreditRequest() throws InvalidAmount {
+    account.credit(-100.50);
+  }
+
+  
 }

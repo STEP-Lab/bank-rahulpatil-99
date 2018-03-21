@@ -24,7 +24,8 @@ public class Account {
     return accountNumber;
   }
 
-  public void credit(double amountTobeCredited) {
+  public void credit(double amountTobeCredited) throws InvalidAmount {
+    if(amountTobeCredited<0) throw new InvalidAmount();
     balance+=amountTobeCredited;
   }
 }
