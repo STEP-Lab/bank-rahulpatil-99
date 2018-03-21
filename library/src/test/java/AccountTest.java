@@ -44,8 +44,13 @@ public class AccountTest {
   }
 
   @Test
-  public void shouldDebitAmountFromAccountBalance() {
+  public void shouldDebitAmountFromAccountBalance() throws InvalidAmount {
     account.debit(200);
     assertThat(account.getBalance(),is(800.00));
+  }
+
+  @Test(expected = InvalidAmount.class)
+  public void shouldThrowInvalidAmountExceptionForInvalidAmountDebitRequest() throws InvalidAmount{
+    account.debit(-200.00);
   }
 }

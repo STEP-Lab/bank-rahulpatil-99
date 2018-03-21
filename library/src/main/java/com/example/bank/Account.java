@@ -29,7 +29,8 @@ public class Account {
     balance+=amountTobeCredited;
   }
 
-  public void debit(double amountTobeDebited) {
+  public void debit(double amountTobeDebited) throws InvalidAmount {
+    if(amountTobeDebited<0) throw new InvalidAmount();
     balance-=amountTobeDebited;
   }
 }
