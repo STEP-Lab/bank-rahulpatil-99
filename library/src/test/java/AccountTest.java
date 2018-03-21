@@ -15,7 +15,7 @@ public class AccountTest {
 
   @Before
   public void setUp() throws InvalidAccountNumber {
-    account = new Account("1111-1111", 1000.00);
+    account = new Account("1111-1111","Rahul", 1000.00);
   }
 
   @Test
@@ -25,7 +25,7 @@ public class AccountTest {
 
   @Test(expected = InvalidAccountNumber.class)
   public void checkValidAccountNumber() throws InvalidAccountNumber {
-    new Account("111-1234",1000.00);
+    new Account("111-1234","Ajay",1000.00);
   }
 
   @Test
@@ -58,5 +58,15 @@ public class AccountTest {
   @Test(expected = MinimumAccountBalance.class)
   public void shouldHandleMinimumAccountBalanceException() throws InvalidAmount, MinimumAccountBalance {
     account.debit(600.0);
+  }
+
+  @Test
+  public void shouldCheckSummaryOfAnAccount() {
+    assertThat(account.getSummary(),is("Your Account Number:- 1111-1111 \nYour name:- Rahul \nYour balance:- 1000.00"));
+  }
+
+  @Test
+  public void shouldCheckNameOfAnAccount() {
+    assertThat(account.getName(),is("Rahul"));
   }
 }

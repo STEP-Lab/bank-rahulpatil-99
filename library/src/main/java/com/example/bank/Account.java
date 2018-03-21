@@ -1,13 +1,17 @@
 package com.example.bank;
 
+import static java.lang.String.format;
+
 public class Account {
   private static final double MIN_BALANCE_REQUIRED = 500.00;
   private final String accountNumber;
+  private final String name;
   private double balance;
 
-  public Account(String accountNumber, double balance) throws InvalidAccountNumber {
+  public Account(String accountNumber,String name,double balance) throws InvalidAccountNumber {
     isValidAccountNumber(accountNumber);
     this.accountNumber = accountNumber;
+    this.name = name;
     this.balance = balance;
   }
 
@@ -34,5 +38,14 @@ public class Account {
     if(amountTobeDebited<0) throw new InvalidAmount();
     if(balance-amountTobeDebited<MIN_BALANCE_REQUIRED) throw new MinimumAccountBalance();
     balance-=amountTobeDebited;
+  }
+
+  public String getSummary() {
+    String statement= format("Your Account Number:- %s \nYour name:- %s \nYour balance:- %g",accountNumber,name,balance);
+    return statement;
+  }
+
+  public String getName() {
+    return name;
   }
 }
