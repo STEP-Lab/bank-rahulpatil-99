@@ -2,7 +2,7 @@ package com.example.bank;
 
 public class Account {
   private final String accountNumber;
-  private final double balance;
+  private double balance;
 
   public Account(String accountNumber, double balance) throws InvalidAccountNumber {
     isValidAccountNumber(accountNumber);
@@ -20,4 +20,11 @@ public class Account {
     return balance;
   }
 
+  public String getAccountNumber() {
+    return accountNumber;
+  }
+
+  public void credit(double amountTobeCredited) {
+    balance+=amountTobeCredited;
+  }
 }
