@@ -1,6 +1,7 @@
 package com.example.bank;
 
 public class Account {
+  private static final double MIN_BALANCE_REQUIRED = 500.00;
   private final String accountNumber;
   private double balance;
 
@@ -29,8 +30,9 @@ public class Account {
     balance+=amountTobeCredited;
   }
 
-  public void debit(double amountTobeDebited) throws InvalidAmount {
+  public void debit(double amountTobeDebited) throws InvalidAmount, MinimumAccountBalance {
     if(amountTobeDebited<0) throw new InvalidAmount();
+    if(balance-amountTobeDebited<MIN_BALANCE_REQUIRED) throw new MinimumAccountBalance();
     balance-=amountTobeDebited;
   }
 }

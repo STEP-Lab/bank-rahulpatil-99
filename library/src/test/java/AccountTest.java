@@ -1,6 +1,7 @@
 import com.example.bank.Account;
 import com.example.bank.InvalidAccountNumber;
 import com.example.bank.InvalidAmount;
+import com.example.bank.MinimumAccountBalance;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,18 +40,23 @@ public class AccountTest {
   }
 
   @Test(expected = InvalidAmount.class )
-  public void shouldThrowInvalidAmountExceptionForInvalidAmountCreditRequest() throws InvalidAmount {
+  public void shouldHandleInvalidCreditAmountRequest() throws InvalidAmount {
     account.credit(-100.50);
   }
 
   @Test
-  public void shouldDebitAmountFromAccountBalance() throws InvalidAmount {
+  public void shouldDebitAmountFromAccountBalance() throws InvalidAmount, MinimumAccountBalance {
     account.debit(200);
     assertThat(account.getBalance(),is(800.00));
   }
 
   @Test(expected = InvalidAmount.class)
-  public void shouldThrowInvalidAmountExceptionForInvalidAmountDebitRequest() throws InvalidAmount{
+  public void shouldHandleInvalidDebitAmountRequest() throws InvalidAmount, MinimumAccountBalance {
     account.debit(-200.00);
+  }
+
+  @Test(expected = MinimumAccountBalance.class)
+  public void shouldHandleMinimumAccountBalanceException() throws InvalidAmount, MinimumAccountBalance {
+    account.debit(600.0);
   }
 }
