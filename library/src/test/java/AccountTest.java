@@ -1,12 +1,16 @@
-import com.example.bank.Account;
-import com.example.bank.InvalidAccountNumber;
-import com.example.bank.InvalidAmount;
-import com.example.bank.MinimumAccountBalance;
+import com.example.bank.*;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
 public class AccountTest {
@@ -14,7 +18,7 @@ public class AccountTest {
   private Account account;
 
   @Before
-  public void setUp() throws InvalidAccountNumber {
+  public void setUp() throws InvalidAccountNumber, MinimumAccountBalance {
     account = new Account("1111-1111","Rahul", 1000.00);
   }
 
@@ -24,7 +28,7 @@ public class AccountTest {
   }
 
   @Test(expected = InvalidAccountNumber.class)
-  public void checkValidAccountNumber() throws InvalidAccountNumber {
+  public void checkInvalidFormatOfAccountNumber() throws InvalidAccountNumber, MinimumAccountBalance {
     new Account("111-1234","Ajay",1000.00);
   }
 
