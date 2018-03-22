@@ -1,3 +1,5 @@
+package com.example.bank;
+
 import com.example.bank.*;
 import org.hamcrest.Matcher;
 import org.hamcrest.core.IsEqual;

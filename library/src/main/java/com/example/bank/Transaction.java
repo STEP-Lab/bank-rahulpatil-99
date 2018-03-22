@@ -1,19 +1,19 @@
 package com.example.bank;
 
-public class Transaction {
-  private final double amount;
-  private final boolean isCredit;
+import java.util.Date;
 
-  public Transaction(double amount, boolean isCredit) {
+public abstract class Transaction {
+  protected final double amount;
+  protected final String to;
+  protected final Date date;
+
+  public Transaction(double amount, String to, Date date) {
     this.amount = amount;
-    this.isCredit = isCredit;
+    this.to = to;
+    this.date = date;
   }
 
-  public double getAmount() {
-    return amount;
-  }
-
-  public boolean isCreditTransaction() {
-    return isCredit;
+  public Date getDate() {
+    return date;
   }
 }

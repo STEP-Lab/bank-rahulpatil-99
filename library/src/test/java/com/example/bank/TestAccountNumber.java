@@ -1,3 +1,5 @@
+package com.example.bank;
+
 import com.example.bank.AccountNumber;
 import com.example.bank.InvalidAccountNumber;
 import org.junit.Test;

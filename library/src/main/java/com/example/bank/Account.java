@@ -10,7 +10,6 @@ public class Account {
   private final AccountNumber accountNumber;
   private final String name;
   private double balance;
-  private ArrayList<Transaction> allTransactions= new ArrayList<>();
 
   public Account(AccountNumber accountNumber,String name,double balance) throws MinimumAccountBalance {
     CheckMinimumBalanceRequirement(balance);
@@ -38,14 +37,12 @@ public class Account {
   public void credit(double amountTobeCredited) throws InvalidAmount {
     checkInvalidAmount(amountTobeCredited);
     balance+=amountTobeCredited;
-    allTransactions.add(new Transaction(amountTobeCredited,true));
   }
 
   public void debit(double amountTobeDebited) throws InvalidAmount, MinimumAccountBalance {
     checkInvalidAmount(amountTobeDebited);
     CheckMinimumBalanceRequirement(balance-amountTobeDebited);
     balance-=amountTobeDebited;
-    allTransactions.add(new Transaction(amountTobeDebited,false));
   }
 
   public String getSummary() {
@@ -54,10 +51,6 @@ public class Account {
 
   public String getName() {
     return name;
-  }
-
-  public ArrayList<Transaction> getAllTransactions() {
-    return allTransactions;
   }
 
 }
