@@ -19,22 +19,12 @@ public class AccountTest {
 
   @Before
   public void setUp() throws InvalidAccountNumber, MinimumAccountBalance {
-    account = new Account("1111-1111","Rahul", 1000.00);
+    account = new Account(new AccountNumber("1111-1111"),"Rahul", 1000.00);
   }
 
   @Test
   public void checkBalance() {
     assertEquals(account.getBalance(),1000.00);
-  }
-
-  @Test(expected = InvalidAccountNumber.class)
-  public void checkInvalidFormatOfAccountNumber() throws InvalidAccountNumber, MinimumAccountBalance {
-    new Account("111-1234","Ajay",1000.00);
-  }
-
-  @Test
-  public void checkAccountNumber() {
-    assertThat(account.getAccountNumber(),is("1111-1111"));
   }
 
   @Test
