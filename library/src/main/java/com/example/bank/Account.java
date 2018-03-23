@@ -10,12 +10,14 @@ public class Account {
   private final AccountNumber accountNumber;
   private final String name;
   private double balance;
+  private Transactions transactions;
 
   public Account(AccountNumber accountNumber,String name,double balance) throws MinimumAccountBalance {
     CheckMinimumBalanceRequirement(balance);
     this.accountNumber = accountNumber;
     this.name = name;
     this.balance = balance;
+    transactions = new Transactions();
   }
 
   private void CheckMinimumBalanceRequirement(double amount) throws MinimumAccountBalance {
@@ -34,15 +36,17 @@ public class Account {
     return balance;
   }
 
-  public void credit(double amountTobeCredited) throws InvalidAmount {
+  public void credit(double amountTobeCredited,String to) throws InvalidAmount {
     checkInvalidAmount(amountTobeCredited);
     balance+=amountTobeCredited;
+    transactions.credit(amountTobeCredited,to);
   }
 
-  public void debit(double amountTobeDebited) throws InvalidAmount, MinimumAccountBalance {
+  public void debit(double amountTobeDebited,String from) throws InvalidAmount, MinimumAccountBalance {
     checkInvalidAmount(amountTobeDebited);
     CheckMinimumBalanceRequirement(balance-amountTobeDebited);
     balance-=amountTobeDebited;
+    transactions.debit(amountTobeDebited,from);
   }
 
   public String getSummary() {
@@ -53,4 +57,7 @@ public class Account {
     return name;
   }
 
+  public ArrayList<Transaction> getTransactions() {
+    return transactions.getTransactions();
+  }
 }

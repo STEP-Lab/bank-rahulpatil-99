@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
@@ -31,29 +32,29 @@ public class AccountTest {
 
   @Test
   public void shouldCreditAmountIntoAccountBalance() throws InvalidAmount {
-    account.credit(500.50);
+    account.credit(500.50,"Rahul");
     assertThat(account.getBalance(),is(1500.50));
   }
 
   @Test(expected = InvalidAmount.class )
   public void shouldHandleInvalidCreditAmountRequest() throws InvalidAmount {
-    account.credit(-100.50);
+    account.credit(-100.50,"Rahul");
   }
 
   @Test
   public void shouldDebitAmountFromAccountBalance() throws InvalidAmount, MinimumAccountBalance {
-    account.debit(200);
+    account.debit(200,"Rahul");
     assertThat(account.getBalance(),is(800.00));
   }
 
   @Test(expected = InvalidAmount.class)
   public void shouldHandleInvalidDebitAmountRequest() throws InvalidAmount, MinimumAccountBalance {
-    account.debit(-200.00);
+    account.debit(-200.00,"Rahul");
   }
 
   @Test(expected = MinimumAccountBalance.class)
   public void shouldHandleMinimumAccountBalanceException() throws InvalidAmount, MinimumAccountBalance {
-    account.debit(600.0);
+    account.debit(600.0,"Rahul");
   }
 
   @Test
@@ -64,5 +65,13 @@ public class AccountTest {
   @Test
   public void shouldCheckNameOfAnAccount() {
     assertThat(account.getName(),is("Rahul"));
+  }
+
+  @Test
+  public void getAllTransactionHappened() throws InvalidAmount, MinimumAccountBalance {
+    account.credit(1000,"Rahul");
+    account.debit(500,"Vijay");
+    assertThat(account.getTransactions(),hasItem(new CreditTransaction(1000.00,"Rahul")));
+    assertThat(account.getTransactions(),hasItem(new DebitTransaction(500.00,"Vijay")));
   }
 }
