@@ -15,4 +15,8 @@ public class Transactions {
   public ArrayList<Transaction> getTransactions() {
     return transactions;
   }
+
+  public void debit(double amount, String to) {
+    transactions.add(new DebitTransaction(amount,to));
+  }
 }
