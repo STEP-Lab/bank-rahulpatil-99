@@ -1,19 +1,36 @@
 package com.example.bank;
 
-import com.example.bank.DebitTransaction;
 import org.junit.Test;
 
 import java.util.Date;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class TransactionTest {
   @Test
-  public void mustRecordCorrectDateOfTransaction() {
+  public void mustRecordCorrectDateOfDebitTransaction() {
     Date date = new Date();
     Transaction transaction = new DebitTransaction(date,1000.00, "Vishal");
     assertThat(transaction.getDate(),is(date));
+  }
+
+  @Test
+  public void mustRecordCorrectDateOfCreditTransaction() {
+    Date date = new Date();
+    Transaction transaction = new CreditTransaction(date,1000.00, "Vijay");
+    assertThat(transaction.getDate(),is(date));
+  }
+
+  @Test
+  public void mustGetAmountOfAnTransaction() {
+    Transaction transaction = new CreditTransaction(1000.00, "Vijay");
+    assertThat(transaction.getAmount(),is(1000.00));
+  }
+
+  @Test
+  public void mustGetSourceOfAnTransaction() {
+    Transaction transaction = new DebitTransaction(1000.00, "Vishal");
+    assertThat(transaction.getSource(),is("Vishal"));
   }
 }

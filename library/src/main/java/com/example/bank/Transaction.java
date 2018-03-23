@@ -3,14 +3,23 @@ package com.example.bank;
 import java.util.Date;
 
 public abstract class Transaction {
-  protected final double amount;
-  protected final String to;
-  protected final Date date;
+  private final double amount;
+  private final String source;
+  private final Date date;
 
-  public Transaction(double amount, String to, Date date) {
-    this.amount = amount;
-    this.to = to;
+  public double getAmount() {
+    return amount;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+
+  public Transaction( Date date,double amount, String source) {
     this.date = date;
+    this.amount = amount;
+    this.source = source;
   }
 
   public Date getDate() {
