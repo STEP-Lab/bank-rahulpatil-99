@@ -17,9 +17,8 @@ public class TransactionTest {
 
   @Test
   public void mustRecordCorrectDateOfCreditTransaction() {
-    Date date = new Date();
-    Transaction transaction = new CreditTransaction(date,1000.00, "Vijay");
-    assertThat(transaction.getDate(),is(date));
+    Transaction transaction = new CreditTransaction(1000.00, "Vijay");
+    assertThat(transaction.getDate().toString(),is(new Date().toString()));
   }
 
   @Test

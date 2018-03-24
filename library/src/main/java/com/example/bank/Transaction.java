@@ -23,17 +23,19 @@ public abstract class Transaction {
     if (o == null || getClass() != o.getClass()) return false;
     Transaction that = (Transaction) o;
     return Double.compare(that.amount, amount) == 0 &&
-            Objects.equals(source, that.source);
+            Objects.equals(source, that.source) &&
+            Objects.equals(date.toString(), that.date.toString());
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(amount, source);
+    return Objects.hash(amount, source, date.toString());
   }
 
   public Transaction(Date date, double amount, String source) {
     this.date = date;
+
     this.amount = amount;
     this.source = source;
   }
