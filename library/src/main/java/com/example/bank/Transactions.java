@@ -9,16 +9,16 @@ public class Transactions {
     this.transactions = new ArrayList<>();
   }
 
-  public void credit(double amount, String from) {
-    transactions.add(new CreditTransaction(amount,from));
+  public void credit(double amount, String to) {
+    transactions.add(new CreditTransaction(amount,to));
   }
 
   public ArrayList<Transaction> getTransactions() {
     return transactions;
   }
 
-  public void debit(double amount, String to) {
-    transactions.add(new DebitTransaction(amount,to));
+  public void debit(double amount, String from) {
+    transactions.add(new DebitTransaction(amount,from));
   }
 
   public Transactions getTransactionsAbove(double amount) {
@@ -43,6 +43,15 @@ public class Transactions {
     Transactions result = new Transactions();
     for (Transaction transaction:transactions) {
       if(transaction instanceof CreditTransaction)
+        result.transactions.add(transaction);
+    }
+    return result;
+  }
+
+  public Transactions getDebitTransactions() {
+    Transactions result = new Transactions();
+    for (Transaction transaction:transactions) {
+      if(transaction instanceof DebitTransaction)
         result.transactions.add(transaction);
     }
     return result;
