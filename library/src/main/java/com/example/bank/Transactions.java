@@ -66,10 +66,20 @@ public class Transactions {
     return result;
   }
 
-  public Transactions getTransactionsHappenedOn(Date date) {
+  public Transactions getTransactionsHappenedOn(Date when) {
     Transactions result = new Transactions();
     for (Transaction transaction:transactions) {
-      if(transaction.getDate().equals(date)){
+      if(transaction.getDate().equals(when)){
+        result.transactions.add(transaction);
+      }
+    }
+    return result;
+  }
+
+  public Transactions getTransactionsBefore(Date when) {
+    Transactions result = new Transactions();
+    for (Transaction transaction:transactions) {
+      if(transaction.getDate().before(when)){
         result.transactions.add(transaction);
       }
     }

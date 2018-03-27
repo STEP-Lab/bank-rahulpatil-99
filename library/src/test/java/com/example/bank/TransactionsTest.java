@@ -14,11 +14,15 @@ import static org.junit.Assert.assertThat;
 public class TransactionsTest {
   private Transactions transactions;
   SimpleDateFormat dateFormatter;
+  Date febTwenty,febTwentyOne,febTwentyFive;
 
   @Before
-  public void setUp() {
+  public void setUp() throws ParseException {
     transactions = new Transactions();
     dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    febTwenty = dateFormatter.parse("2018-02-20");
+    febTwentyOne = dateFormatter.parse("2018-02-21");
+    febTwentyFive = dateFormatter.parse("2018-02-25");
   }
 
   @Test
@@ -88,17 +92,26 @@ public class TransactionsTest {
   }
 
   @Test
-  public void mustFilterTransactionOnParticulardate() throws ParseException {
-    Date febTwenty = dateFormatter.parse("2018-02-20");
-    Date febTwentyOne = dateFormatter.parse("2018-02-21");
+  public void mustFilterTransactionOn() {
     transactions.credit(febTwenty,1200.10,"Vijay");
     transactions.debit(febTwenty,700.50,"Rahul");
     transactions.credit(febTwentyOne,1500.00,"Vijay");
-
     CreditTransaction creditTransaction = new CreditTransaction(febTwenty,1200.10, "Vijay");
     DebitTransaction debitTransaction = new DebitTransaction(febTwenty,700.50, "Rahul");
-
     Transactions expected = transactions.getTransactionsHappenedOn(febTwenty);
     assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
+  }
+
+  @Test
+  public void mustFilterTransactionBefore() {
+    transactions.credit(febTwenty,1200.10,"Vijay");
+    transactions.debit(febTwenty,700.50,"Rahul");
+    transactions.credit(febTwentyOne,1500.00,"Vijay");
+    transactions.debit(febTwentyFive,700.50,"Rahul");
+    CreditTransaction creditTransaction = new CreditTransaction(febTwenty,1200.10, "Vijay");
+    DebitTransaction debitTransaction = new DebitTransaction(febTwenty,700.50, "Rahul");
+    CreditTransaction creditTransaction1 = new CreditTransaction(febTwentyOne,1500.00, "Vijay");
+    Transactions expected = transactions.getTransactionsBefore(febTwentyFive);
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction,creditTransaction1));
   }
 }
