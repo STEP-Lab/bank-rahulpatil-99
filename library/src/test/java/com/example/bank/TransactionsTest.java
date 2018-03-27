@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class TransactionsTest {
   private Transactions transactions;
   SimpleDateFormat dateFormatter;
-  Date febTwenty,febTwentyOne,febTwentyFive;
+  Date febTwenty,febTwentyOne,febTwentyFive,febTwentyTwo;
 
   @Before
   public void setUp() throws ParseException {
@@ -22,6 +22,7 @@ public class TransactionsTest {
     dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     febTwenty = dateFormatter.parse("2018-02-20");
     febTwentyOne = dateFormatter.parse("2018-02-21");
+    febTwentyTwo = dateFormatter.parse("2018-02-22");
     febTwentyFive = dateFormatter.parse("2018-02-25");
   }
 
@@ -104,14 +105,23 @@ public class TransactionsTest {
 
   @Test
   public void mustFilterTransactionBefore() {
-    transactions.credit(febTwenty,1200.10,"Vijay");
     transactions.debit(febTwenty,700.50,"Rahul");
     transactions.credit(febTwentyOne,1500.00,"Vijay");
-    transactions.debit(febTwentyFive,700.50,"Rahul");
-    CreditTransaction creditTransaction = new CreditTransaction(febTwenty,1200.10, "Vijay");
+    transactions.debit(febTwentyFive,700.00,"Rahul");
     DebitTransaction debitTransaction = new DebitTransaction(febTwenty,700.50, "Rahul");
-    CreditTransaction creditTransaction1 = new CreditTransaction(febTwentyOne,1500.00, "Vijay");
+    CreditTransaction creditTransaction = new CreditTransaction(febTwentyOne,1500.00, "Vijay");
     Transactions expected = transactions.getTransactionsBefore(febTwentyFive);
-    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction,creditTransaction1));
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
+  }
+
+  @Test
+  public void mustFilterTransactionAfter() {
+    transactions.credit(febTwenty,1200.10,"Vijay");
+    transactions.credit(febTwentyOne,1500.00,"Vijay");
+    transactions.debit(febTwentyFive,700.00,"Rahul");
+    CreditTransaction creditTransaction = new CreditTransaction(febTwentyOne,1500.00, "Vijay");
+    DebitTransaction debitTransaction = new DebitTransaction(febTwentyFive,700.00, "Rahul");
+    Transactions expected = transactions.getTransactionsAfter(febTwenty);
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
   }
 }

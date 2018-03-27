@@ -69,9 +69,8 @@ public class Transactions {
   public Transactions getTransactionsHappenedOn(Date when) {
     Transactions result = new Transactions();
     for (Transaction transaction:transactions) {
-      if(transaction.getDate().equals(when)){
+      if(transaction.getDate().equals(when))
         result.transactions.add(transaction);
-      }
     }
     return result;
   }
@@ -79,9 +78,17 @@ public class Transactions {
   public Transactions getTransactionsBefore(Date when) {
     Transactions result = new Transactions();
     for (Transaction transaction:transactions) {
-      if(transaction.getDate().before(when)){
+      if(transaction.getDate().before(when))
         result.transactions.add(transaction);
-      }
+    }
+    return result;
+  }
+
+  public Transactions getTransactionsAfter(Date when) {
+    Transactions result = new Transactions();
+    for (Transaction transaction:transactions) {
+      if(transaction.getDate().after(when))
+        result.transactions.add(transaction);
     }
     return result;
   }
