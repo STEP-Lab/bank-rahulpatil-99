@@ -26,26 +26,18 @@ public class Account {
     }
   }
 
-  private void checkInvalidAmount(double amount) throws InvalidAmount {
-    if(amount<=0){
-      throw new InvalidAmount();
-    }
-  }
-
   public double getBalance() {
     return balance;
   }
 
-  public void credit(Money amountTobeCredited, String to) throws InvalidAmount {
+  public void credit(Money amountTobeCredited, String to) {
     double amount = amountTobeCredited.getAmount();
-    checkInvalidAmount(amount);
     balance+=amount;
     transactions.credit(amount,to);
   }
 
-  public void debit(Money amountTobeDebited, String from) throws InvalidAmount, MinimumAccountBalance {
+  public void debit(Money amountTobeDebited, String from) throws MinimumAccountBalance {
     double amount = amountTobeDebited.getAmount();
-    checkInvalidAmount(amount);
     CheckMinimumBalanceRequirement(balance-amount);
     balance-=amount;
     transactions.debit(amount,from);

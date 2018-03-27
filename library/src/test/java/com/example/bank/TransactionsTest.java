@@ -3,17 +3,22 @@ package com.example.bank;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 
 public class TransactionsTest {
-
   private Transactions transactions;
+  SimpleDateFormat dateFormatter;
 
   @Before
   public void setUp() {
     transactions = new Transactions();
+    dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
   }
 
   @Test
@@ -80,5 +85,20 @@ public class TransactionsTest {
     DebitTransaction debitTransaction = new DebitTransaction(700.50, "Rahul");
     DebitTransaction debitTransaction1 = new DebitTransaction(1500.30, "Vijay");
     assertThat(expected.getTransactions(),hasItems(debitTransaction,debitTransaction1));
+  }
+
+  @Test
+  public void mustFilterTransactionOnParticulardate() throws ParseException {
+    Date febTwenty = dateFormatter.parse("2018-02-20");
+    Date febTwentyOne = dateFormatter.parse("2018-02-21");
+    transactions.credit(febTwenty,1200.10,"Vijay");
+    transactions.debit(febTwenty,700.50,"Rahul");
+    transactions.credit(febTwentyOne,1500.00,"Vijay");
+
+    CreditTransaction creditTransaction = new CreditTransaction(febTwenty,1200.10, "Vijay");
+    DebitTransaction debitTransaction = new DebitTransaction(febTwenty,700.50, "Rahul");
+
+    Transactions expected = transactions.getTransactionsHappenedOn(febTwenty);
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
   }
 }

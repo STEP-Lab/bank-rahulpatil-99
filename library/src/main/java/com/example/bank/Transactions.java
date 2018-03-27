@@ -1,6 +1,7 @@
 package com.example.bank;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Transactions {
   private ArrayList<Transaction> transactions;
@@ -9,16 +10,24 @@ public class Transactions {
     this.transactions = new ArrayList<>();
   }
 
+  protected void credit(Date date,double amount, String to) {
+    transactions.add(new CreditTransaction(date,amount,to));
+  }
+
   public void credit(double amount, String to) {
     transactions.add(new CreditTransaction(amount,to));
   }
 
-  public ArrayList<Transaction> getTransactions() {
-    return transactions;
+  protected void debit(Date date,double amount, String from) {
+    transactions.add(new DebitTransaction(date,amount,from));
   }
 
   public void debit(double amount, String from) {
     transactions.add(new DebitTransaction(amount,from));
+  }
+
+  public ArrayList<Transaction> getTransactions() {
+    return transactions;
   }
 
   public Transactions getTransactionsAbove(double amount) {
@@ -53,6 +62,16 @@ public class Transactions {
     for (Transaction transaction:transactions) {
       if(transaction instanceof DebitTransaction)
         result.transactions.add(transaction);
+    }
+    return result;
+  }
+
+  public Transactions getTransactionsHappenedOn(Date date) {
+    Transactions result = new Transactions();
+    for (Transaction transaction:transactions) {
+      if(transaction.getDate().equals(date)){
+        result.transactions.add(transaction);
+      }
     }
     return result;
   }
