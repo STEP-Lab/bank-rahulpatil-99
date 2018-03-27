@@ -43,7 +43,19 @@ public class TransactionsTest {
     transactions.credit(900.00,"Vijay");
     transactions.debit(1100.00,"Vijay");
     Transactions expected = transactions.getTransactionsAbove(1000);
-    assertThat(expected.getTransactions(),hasItems(new CreditTransaction(2000.0,"Rahul"),
-            new DebitTransaction(1100.0,"Vijay")));
+    CreditTransaction creditTransaction = new CreditTransaction(2000.0, "Rahul");
+    DebitTransaction debitTransaction = new DebitTransaction(1100.0, "Vijay");
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
+  }
+
+  @Test
+  public void mustFilterTransactionBelow() {
+    transactions.credit(700.50,"Rahul");
+    transactions.credit(1200.00,"Vijay");
+    transactions.debit(800.33,"Vijay");
+    Transactions expected = transactions.getTransactionsBelow(1000);
+    CreditTransaction creditTransaction = new CreditTransaction(700.50, "Rahul");
+    DebitTransaction debitTransaction = new DebitTransaction(800.33, "Vijay");
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
   }
 }

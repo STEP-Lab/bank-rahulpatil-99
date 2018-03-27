@@ -23,7 +23,16 @@ public class Transactions {
   public Transactions getTransactionsAbove(double amount) {
     Transactions result = new Transactions();
     for (Transaction transaction: transactions ) {
-      if(transaction.getAmount()>amount)
+      if(transaction.getAmount()>=amount)
+        result.transactions.add(transaction);
+    }
+    return result;
+  }
+
+  public Transactions getTransactionsBelow(double amount) {
+    Transactions result = new Transactions();
+    for (Transaction transaction: transactions ) {
+      if(transaction.getAmount()<=amount)
         result.transactions.add(transaction);
     }
     return result;
