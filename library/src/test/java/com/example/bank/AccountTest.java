@@ -21,8 +21,9 @@ public class AccountTest {
   private Account account;
 
   @Before
-  public void setUp() throws InvalidAccountNumber, MinimumAccountBalance {
-    account = new Account(new AccountNumber("1111-1111"),"Rahul", 1000.00);
+  public void setUp() throws InvalidAccountNumber, MinimumAccountBalance, InvalidAmount {
+    Money balance = Money.getMoney(1000.00);
+    account = new Account(new AccountNumber("1111-1111"),"Rahul", balance);
   }
 
   @Test
@@ -32,29 +33,34 @@ public class AccountTest {
 
   @Test
   public void shouldCreditAmountIntoAccountBalance() throws InvalidAmount {
-    account.credit(500.50,"Rahul");
+    Money balance = Money.getMoney(500.50);
+    account.credit(balance,"Rahul");
     assertThat(account.getBalance(),is(1500.50));
   }
 
   @Test(expected = InvalidAmount.class )
   public void shouldHandleInvalidCreditAmountRequest() throws InvalidAmount {
-    account.credit(-100.50,"Rahul");
+    Money balance = Money.getMoney(-100.50);
+    account.credit(balance,"Rahul");
   }
 
   @Test
   public void shouldDebitAmountFromAccountBalance() throws InvalidAmount, MinimumAccountBalance {
-    account.debit(200,"Rahul");
+    Money balance = Money.getMoney(200);
+    account.debit(balance,"Rahul");
     assertThat(account.getBalance(),is(800.00));
   }
 
   @Test(expected = InvalidAmount.class)
   public void shouldHandleInvalidDebitAmountRequest() throws InvalidAmount, MinimumAccountBalance {
-    account.debit(-200.00,"Rahul");
+    Money balance = Money.getMoney(-200.00);
+    account.debit(balance,"Rahul");
   }
 
   @Test(expected = MinimumAccountBalance.class)
   public void shouldHandleMinimumAccountBalanceException() throws InvalidAmount, MinimumAccountBalance {
-    account.debit(600.0,"Rahul");
+    Money balance = Money.getMoney(600.0);
+    account.debit(balance,"Rahul");
   }
 
   @Test
@@ -69,8 +75,10 @@ public class AccountTest {
 
   @Test
   public void getAllTransactionHappened() throws InvalidAmount, MinimumAccountBalance {
-    account.credit(1000,"Rahul");
-    account.debit(500,"Vijay");
+    Money balance = Money.getMoney(1000);
+    account.credit(balance,"Rahul");
+    Money anotherBalance = Money.getMoney(500);
+    account.debit(anotherBalance,"Vijay");
     assertThat(account.getTransactions(),hasItem(new CreditTransaction(1000.00,"Rahul")));
     assertThat(account.getTransactions(),hasItem(new DebitTransaction(500.00,"Vijay")));
   }
