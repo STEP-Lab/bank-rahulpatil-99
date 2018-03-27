@@ -43,4 +43,9 @@ public abstract class Transaction {
   public Date getDate() {
     return date;
   }
+
+  public String toCsv(){
+    String csv = this.getDate().toString() + "," + this.getClass() + "," + this.getAmount() + "," + this.getSource();
+    return csv;
+  }
 }

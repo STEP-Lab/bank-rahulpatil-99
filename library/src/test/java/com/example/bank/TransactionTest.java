@@ -32,4 +32,12 @@ public class TransactionTest {
     Transaction transaction = new DebitTransaction(1000.00, "Vishal");
     assertThat(transaction.getSource(),is("Vishal"));
   }
+
+  @Test
+  public void mustGetCsvOfGivenField() {
+    Date date = new Date();
+    Transaction transaction = new CreditTransaction(date,1000.0,"Rahul");
+    String expected = date.toString()+","+transaction.getClass()+",1000.0,Rahul";
+    assertThat(transaction.toCsv(),is(expected));
+  }
 }
