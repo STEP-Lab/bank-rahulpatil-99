@@ -92,4 +92,14 @@ public class Transactions {
     }
     return result;
   }
+
+  public Transactions getTransactionsBetween(Date initial , Date last) {
+    Transactions result = new Transactions();
+    for (Transaction transaction:transactions) {
+      Date transactDate = transaction.getDate();
+      if(transactDate.after(initial) && transactDate.before(last))
+        result.transactions.add(transaction);
+    }
+    return result;
+  }
 }

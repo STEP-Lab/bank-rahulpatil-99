@@ -124,4 +124,16 @@ public class TransactionsTest {
     Transactions expected = transactions.getTransactionsAfter(febTwenty);
     assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
   }
+
+  @Test
+  public void mustFilterTransactionBetween() {
+    transactions.credit(febTwenty,1200.10,"Vijay");
+    transactions.credit(febTwentyOne,1500.00,"Vijay");
+    transactions.debit(febTwentyTwo,200.00,"Rahul");
+    transactions.debit(febTwentyFive,700.00,"Rahul");
+    CreditTransaction creditTransaction = new CreditTransaction(febTwentyOne,1500.00, "Vijay");
+    DebitTransaction debitTransaction = new DebitTransaction(febTwentyTwo,200.00, "Rahul");
+    Transactions expected = transactions.getTransactionsBetween(febTwenty,febTwentyFive);
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
+  }
 }
