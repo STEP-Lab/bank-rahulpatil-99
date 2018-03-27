@@ -3,11 +3,16 @@ package com.example.bank;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 
@@ -135,5 +140,32 @@ public class TransactionsTest {
     DebitTransaction debitTransaction = new DebitTransaction(febTwentyTwo,200.00, "Rahul");
     Transactions expected = transactions.getTransactionsBetween(febTwenty,febTwentyFive);
     assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
+  }
+
+  @Test
+  public void mustCalculateCurrentBalance() {
+    transactions.credit(1200.10,"Vijay");
+    transactions.debit(100.00,"Vijay");
+    assertThat(transactions.getCurrentBalance(),is(1100.10));
+  }
+
+  @Test
+  public void writeTransactionInCsvFile() throws IOException {
+    ArrayList<String> actual = new ArrayList<>();
+    Date date = new Date();
+    transactions.credit(date,1000,"Rahul");
+    CreditTransaction creditTransaction = new CreditTransaction(date, 1000, "Rahul");
+    File file = new File("test.csv");
+    FileWriter fileWriter = new FileWriter(file){
+      public void write(String str) {
+        actual.add(str);
+      }
+    };
+    transactions.printToCsv(fileWriter);
+    fileWriter.flush();
+    fileWriter.close();
+    String expected = creditTransaction.toCsv()+",1000.0\n";
+    assertThat(actual,hasItem(expected));
+    file.delete();
   }
 }

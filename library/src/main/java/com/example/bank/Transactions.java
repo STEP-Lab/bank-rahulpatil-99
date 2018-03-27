@@ -1,5 +1,7 @@
 package com.example.bank;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -101,5 +103,29 @@ public class Transactions {
         result.transactions.add(transaction);
     }
     return result;
+  }
+
+  private static double updateBalance(Transaction transaction,double balance){
+    if(transaction instanceof CreditTransaction){
+      return balance + transaction.getAmount();
+    }
+    return balance - transaction.getAmount();
+  }
+
+  public double getCurrentBalance() {
+    double currentBalance = 0;
+    for (Transaction transaction : transactions) {
+      currentBalance = updateBalance(transaction,currentBalance);
+    }
+    return currentBalance;
+  }
+
+  public void printToCsv(FileWriter fileWriter) throws IOException {
+    double currentBalance=0;
+    fileWriter.write("date,type,amount,source,currentbalance\n");
+    for (Transaction transaction: transactions) {
+      currentBalance = updateBalance(transaction,currentBalance);
+      fileWriter.write(transaction.toCsv()+","+currentBalance+"\n");
+    }
   }
 }
