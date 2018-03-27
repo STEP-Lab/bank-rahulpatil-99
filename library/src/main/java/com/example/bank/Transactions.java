@@ -19,4 +19,13 @@ public class Transactions {
   public void debit(double amount, String to) {
     transactions.add(new DebitTransaction(amount,to));
   }
+
+  public Transactions getTransactionsAbove(double amount) {
+    Transactions result = new Transactions();
+    for (Transaction transaction: transactions ) {
+      if(transaction.getAmount()>amount)
+        result.transactions.add(transaction);
+    }
+    return result;
+  }
 }
