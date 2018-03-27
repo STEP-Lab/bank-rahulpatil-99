@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static com.example.bank.Account.createAccount;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -24,7 +25,7 @@ public class AccountTest {
   @Before
   public void setUp() throws InvalidAccountNumber, MinimumAccountBalance, InvalidAmount {
     Money balance = Money.getMoney(1000.00);
-    account = new Account(new AccountNumber("1111-1111"),"Rahul", balance);
+    account = createAccount(new AccountNumber("1111-1111"),"Rahul", balance);
   }
 
   @Test
