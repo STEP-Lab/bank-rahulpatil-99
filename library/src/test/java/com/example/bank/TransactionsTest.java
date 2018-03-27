@@ -58,4 +58,15 @@ public class TransactionsTest {
     DebitTransaction debitTransaction = new DebitTransaction(800.33, "Vijay");
     assertThat(expected.getTransactions(),hasItems(creditTransaction,debitTransaction));
   }
+
+  @Test
+  public void mustFilterCreditTransaction() {
+    transactions.credit(700.50,"Rahul");
+    transactions.credit(1200.00,"Vijay");
+    transactions.debit(800.33,"Vijay");
+    Transactions expected = transactions.getCreditTransactions();
+    CreditTransaction creditTransaction = new CreditTransaction(700.50, "Rahul");
+    CreditTransaction creditTransaction1 = new CreditTransaction(1200.00, "Vijay");
+    assertThat(expected.getTransactions(),hasItems(creditTransaction,creditTransaction1));
+  }
 }

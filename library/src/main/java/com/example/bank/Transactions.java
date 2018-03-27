@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Transactions {
   private ArrayList<Transaction> transactions;
+
   public Transactions() {
     this.transactions = new ArrayList<>();
   }
@@ -33,6 +34,15 @@ public class Transactions {
     Transactions result = new Transactions();
     for (Transaction transaction: transactions ) {
       if(transaction.getAmount()<=amount)
+        result.transactions.add(transaction);
+    }
+    return result;
+  }
+
+  public Transactions getCreditTransactions() {
+    Transactions result = new Transactions();
+    for (Transaction transaction:transactions) {
+      if(transaction instanceof CreditTransaction)
         result.transactions.add(transaction);
     }
     return result;
