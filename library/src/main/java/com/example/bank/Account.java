@@ -50,7 +50,7 @@ public class Account {
     return name;
   }
 
-  public ArrayList<Transaction> getTransactions() {
-    return transactions.getTransactions();
+  public Transactions getTransactions() {
+    return transactions;
   }
 }

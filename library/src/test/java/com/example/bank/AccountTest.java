@@ -71,6 +71,7 @@ public class AccountTest {
     account.debit(anotherBalance,"Vijay");
     CreditTransaction creditTransaction = new CreditTransaction(1000.00, "Rahul");
     DebitTransaction debitTransaction = new DebitTransaction(500.00, "Vijay");
-    assertThat(account.getTransactions(),hasItems(creditTransaction,debitTransaction));
+    Transactions actual = account.getTransactions();
+    assertThat(actual.getTransactions(),hasItems(creditTransaction,debitTransaction));
   }
 }

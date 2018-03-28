@@ -16,7 +16,6 @@ public abstract class Transaction {
     return source;
   }
 
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -30,12 +29,11 @@ public abstract class Transaction {
   @Override
   public int hashCode() {
 
-    return Objects.hash(amount, source, date.toString());
+    return Objects.hash(amount, source, date);
   }
 
   public Transaction(Date date, double amount, String source) {
     this.date = date;
-
     this.amount = amount;
     this.source = source;
   }
@@ -48,4 +46,5 @@ public abstract class Transaction {
     String csv = this.getDate().toString() + "," + this.getClass() + "," + this.getAmount() + "," + this.getSource();
     return csv;
   }
+
 }

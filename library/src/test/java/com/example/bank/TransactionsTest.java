@@ -162,8 +162,6 @@ public class TransactionsTest {
       }
     };
     transactions.printToCsv(fileWriter);
-    fileWriter.flush();
-    fileWriter.close();
     String expected = creditTransaction.toCsv()+",1000.0\n";
     assertThat(actual,hasItem(expected));
     file.delete();

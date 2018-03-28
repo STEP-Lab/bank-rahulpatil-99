@@ -127,5 +127,7 @@ public class Transactions {
       currentBalance = updateBalance(transaction,currentBalance);
       fileWriter.write(transaction.toCsv()+","+currentBalance+"\n");
     }
+    fileWriter.flush();
+    fileWriter.close();
   }
 }
